@@ -15,12 +15,18 @@
     "fixLint": "ng lint hr-assist --fix",
     "generate-releaselog": "github-changes -n ${npm_package_version} --only-pulls --use-commit-body --owner FurtunaDaniel --repository playground --token ${HR_TOKEN} --file RELEASELOG.md",
     "version": "npm run generate-releaselog && gulp changelog && git add RELEASELOG.md CHANGELOG_AUTO.md CHANGELOG.md",
-    "deployDist": "firebase deploy"
+    "deployDist": "firebase deploy",
+    "install-git-hooks": "./scripts/install-git-hooks.sh"
   },
   "engines": {
     "node": ">=8.0.0",
     "npm": ">=5.5.0"
   },
+  "config": {
+    "git": {
+        "hooks": "pre-commit pre-push"
+    }
+},
   "private": true,
   "dependencies": {
     "@angular/animations": "~6.0.7",
