@@ -1,0 +1,33 @@
+language: node_js
+
+node_js:
+  - '10'
+# latest version of nodeJs in this moment
+
+before_install:
+  - npm install -g npm@latest
+
+before_script:
+  - npm install -g --silent firebase-tools # installs firebase to run firebase deploy
+  - npm install -g --silent @angular/cli
+
+install:
+  - travis_wait 30 npm install
+
+script:
+  - npm run deploy
+
+deploy:
+  provider: firebase
+  project: 'assist-hr'
+  skip_cleanup: true
+  token:
+    secure: $FIREBASE_TOKEN
+# deploy to firebase
+after_success:
+  - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false"
+
+notifications:
+  email:
+    on_failure: change
+    on_success: false
